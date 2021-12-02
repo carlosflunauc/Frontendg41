@@ -1,4 +1,8 @@
+import { ModeloIdentificar } from './../../modelos/identificar.modelo';
+import { SeguridadService } from 'src/app/servicios/seguridad.service';
+import { SeguridadModule } from './../../modulos/seguridad/seguridad.module';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-navb',
@@ -7,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuNavbComponent implements OnInit {
 
-  constructor() { }
+  seInicioSesion :boolean= false;
+
+  subs:Subscription = new Subscription();
+  constructor(private SeguridadService: SeguridadService) {
+
+   }
 
   ngOnInit(): void {
+    this.subs =this.SeguridadService.ObtenerDatosUsuarioEnSesion().subscribe((datos:ModeloIdentificar) =>{
+      this.seInicioSesion=datos.siestaIdentificado;
+    })
   }
 
 }

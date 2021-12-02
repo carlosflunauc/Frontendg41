@@ -51,4 +51,21 @@ export class SeguridadService {
       return null;
      }
    }
+
+   AlmacenarSesion(datos: ModeloIdentificar){
+    datos.siestaIdentificado= true;
+    let stringDatos = JSON.stringify(datos);
+    localStorage.setItem("datosSesion",stringDatos);
+    this.RefrescarDatosSesion(datos);
+   }
+
+   EliminarInformacionSesion(){
+    localStorage.removeItem("datosSesion");
+    this.RefrescarDatosSesion(new ModeloIdentificar());
+   }
+
+   SeHaIniciadoSesion(){
+    let datosString = localStorage.getItem("datosSesion");
+    return datosString;
+   }
 }
